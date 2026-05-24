@@ -18,8 +18,7 @@ services:
       - .env
     volumes:
       - wp_demo_data:/var/www/html
-      - ./wp-content/themes:/var/www/html/wp-content/themes
-      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/themes/wp-demo-theme:/var/www/html/wp-content/themes/wp-demo-theme
       - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
     networks:
       - wp_demo_internal
