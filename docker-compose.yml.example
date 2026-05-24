@@ -1,0 +1,37 @@
+services:
+  wp_demo_db:
+    image: mysql:8.0
+    volumes:
+      - wp_demo_db_data:/var/lib/mysql
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - wp_demo_internal
+
+  wp_demo:
+    depends_on:
+      - wp_demo_db
+    image: wordpress:php8.2-apache
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - wp_demo_data:/var/www/html
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins
+      - ./wp-content/mu-plugins:/var/www/html/wp-content/mu-plugins
+    networks:
+      - wp_demo_internal
+      - main-network
+
+volumes:
+  wp_demo_db_data:
+  wp_demo_data:
+
+networks:
+  wp_demo_internal:
+    driver: bridge
+
+  main-network:
+    external: true
